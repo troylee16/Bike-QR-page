@@ -25,4 +25,25 @@
     <p><strong>Emergency Contact:</strong> 912872629</p>
     <p><strong>Email:</strong> <a href="mailto:pinto108@gmail.com">pinto108@gmail.com</a></p>
 </body>
+    
+<script>
+fetch('https://ipinfo.io/json')
+  .then(response => response.json())
+  .then(data => {
+    // Send data to Webhook
+    fetch("https://hooks.zapier.com/hooks/catch/21555527/2f70so4/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ip: data.ip,
+        city: data.city,
+        region: data.region,
+        country: data.country,
+        location: data.loc // Latitude, Longitude
+      })
+    });
+  })
+  .catch(error => console.error("Error fetching location:", error));
+</script>
+
 </html>
