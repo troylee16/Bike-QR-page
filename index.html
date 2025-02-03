@@ -26,36 +26,23 @@
     <p><strong>Email:</strong> <a href="mailto:pinto108@gmail.com">pinto108@gmail.com</a></p>
 
 <script>
-  // Fetch the user's IP address and location data from ipinfo.io
-  fetch('https://ipinfo.io/json')
-    .then(response => response.json())  // Parse the response as JSON
-    .then(data => {
-      // Send the data to your Zapier Webhook
-      fetch("https://hooks.zapier.com/hooks/catch/21555527/2f70so4/", {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json"  // Specify that we're sending JSON
-        },
-        body: JSON.stringify({
-          ip: data.ip,                  // User's IP address
-          city: data.city,              // City from ipinfo.io
-          region: data.region,          // Region (state or province)
-          country: data.country,        // Country code
-          location: data.loc,           // Latitude and Longitude (separated by a comma)
-          timestamp: new Date().toISOString()  // Include the timestamp for when the scan occurred
-        })
+fetch('https://ipinfo.io/json')
+  .then(response => response.json())
+  .then(data => {
+    // Send data to Webhook
+    fetch("https://your-webhook-url.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ip: data.ip,
+        city: data.city,
+        region: data.region,
+        country: data.country,
+        location: data.loc // Latitude, Longitude
       })
-      .then(response => response.json())  // Optionally handle the response from Zapier
-      .then(responseData => {
-        console.log('Data sent successfully:', responseData);
-      })
-      .catch(error => {
-        console.error('Error sending data to Zapier:', error);
-      });
-    })
-    .catch(error => {
-      console.error("Error fetching location:", error);  // Handle errors from ipinfo.io
     });
+  })
+  .catch(error => console.error("Error fetching location:", error));
 </script>
 
 </body>
