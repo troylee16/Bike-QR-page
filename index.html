@@ -14,22 +14,6 @@
     <p><strong>Emergency Contact:</strong> 912872629</p>
     <p><strong>Email:</strong> <a href="mailto:pinto108@gmail.com">pinto108@gmail.com</a></p>
 
-<script>
-fetch("https://ipinfo.io/json?token=6c459d41205b76")
-  .then(response => response.json())
-  .then(data => {
-    console.log("User IP:", data.ip);
-    console.log("Location:", data.city, data.region, data.country);
-    
-    // Send the data to a webhook
-    fetch("https://hooks.zapier.com/hooks/catch/21555527/2f70so4/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-  })
-  .catch(error => console.error("Error fetching IP info:", error));
-</script>
 
 </body>
     
