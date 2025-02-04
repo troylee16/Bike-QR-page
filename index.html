@@ -5,19 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bike QR Code</title>
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MRBCP67S');</script>
-    <!-- End Google Tag Manager -->
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRBCP67S"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     
     <h2>If you found this bike, please contact:</h2>
     <p><strong>Name:</strong> Ricardo Macedo Ferreira Pinto</p>
@@ -26,23 +15,20 @@
     <p><strong>Email:</strong> <a href="mailto:pinto108@gmail.com">pinto108@gmail.com</a></p>
 
 <script>
-fetch('https://ipinfo.io/json')
+fetch("https://ipinfo.io/json?token=6c459d41205b76")
   .then(response => response.json())
   .then(data => {
-    // Send data to Webhook
-    fetch("https://your-webhook-url.com", {
+    console.log("User IP:", data.ip);
+    console.log("Location:", data.city, data.region, data.country);
+    
+    // Send the data to a webhook
+    fetch("https://hooks.zapier.com/hooks/catch/21555527/2f70so4/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ip: data.ip,
-        city: data.city,
-        region: data.region,
-        country: data.country,
-        location: data.loc // Latitude, Longitude
-      })
+      body: JSON.stringify(data),
     });
   })
-  .catch(error => console.error("Error fetching location:", error));
+  .catch(error => console.error("Error fetching IP info:", error));
 </script>
 
 </body>
